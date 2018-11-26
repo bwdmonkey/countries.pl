@@ -19,8 +19,8 @@ def snakeCase(str):
     """Convert any string into snake_case without spaces
     """
     s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', str)
-    s2 = re.sub('\\s+', r'_', s1)
-    s3 = re.sub('-', r'', s2)
+    s2 = re.sub('[\\(\\)-]', r'', s1)
+    s3 = re.sub('\\s+', r'_', s2)
     s4 = re.sub('([a-z0-9])([A-Z])', r'\1_\2', s3).lower()
     return re.sub('__', r'_', s4)
 
