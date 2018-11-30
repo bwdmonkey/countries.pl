@@ -23,4 +23,15 @@ Ans = 1.15137
 false.
 ```
 
+Testing: Only applicable to `grammar.pl`
+
+```prolog
+?- ["<filepath>/countries.pl/grammar.pl"].
+true
+?- run_tests.
+% PL-Unit: grammar ............ done
+% All 12 tests passed
+true.
+```
+
 Disclaimer: This project was made as a part of UBC CPSC 312 Project. This project will not be maintained after December 2018.
