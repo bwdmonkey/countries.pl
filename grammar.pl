@@ -60,7 +60,7 @@ noun([X | T],T,X):- country(_,X,_,_,_,_,_,_,_,_,_).
 
 reln([the,region,of | T],T,O1,O2) :- country(O1,O2,_,_,_,_,_,_,_,_,_).
 reln([the,continent,of | T],T,O1,O2) :- country(O2,O1,_,_,_,_,_,_,_,_,_).
-reln([the,countries,of | T], T, O1, O2) :- country(O1,O2,_,_,_,_,_,_,_,_,_).
+reln([the,countries,in | T], T, O1, O2) :- country(O1,O2,_,_,_,_,_,_,_,_,_).
 reln([country,is,in | T],T,01,O2) :- country(01,O2,_,_,_,_,_,_,_,_,_).
 reln([the,happiness,rank,of | T],T,_01,O2) :- country(O2,_,_01,_,_,_,_,_,_,_,_).
 reln([the,happiness,score,of | T],T,_01,O2) :- country(O2,_,_,_01,_,_,_,_,_,_,_).
@@ -80,6 +80,8 @@ question([is | T0],T2,Obj) :-
     mp(T1,T2,Obj).
 question([what,is | T0], T1, Obj) :-
     mp(T0,T1,Obj).
+question([which, are | T0], T1, Obj) :-
+	mp(T0, T1, Obj).
 question([what,is | T0],T1,Obj) :-
     noun_phrase(T0,T1,Obj).
 question([who,is | T0],T1,Ind) :-
