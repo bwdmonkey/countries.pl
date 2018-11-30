@@ -10,12 +10,12 @@ Usage: Import via consulting in SWI-Prolog
 ?- ["<filepath>/countries.pl/main.pl"].
 true
 ?- q(Ans).
-"List of attributes that you can inquire about:"
+"List of score attributes that you can inquire about:"
 "Country, Region, Happiness Rank, Happiness Score, GDP per Capita, Family, Life Expectancy, Freedom, Government Corruption, Generosity, Dystopia Residual"
 
-"Sample Queries: What is the happiness rating of Sweden?"
-"                What is the GDP of France."
-"                What are the countries in Europe"
+"Sample Queries: what is the happiness rating of sweden?"
+"                what is the gdp score of france."
+"                what are the countries in western_europe"
 
 "Please enter query in lowercase."
 Ask me: what is the family score of argentina?

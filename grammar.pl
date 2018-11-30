@@ -49,13 +49,15 @@ noun([region | T],T,Obj) :- country(_,Obj,_,_,_,_,_,_,_,_,_).
 reln([the,region,of | T],T,O1,O2) :- country(O2,O1,_,_,_,_,_,_,_,_,_).
 reln([the,continent,of | T],T,O1,O2) :- country(O2,O1,_,_,_,_,_,_,_,_,_).
 reln([country,is,in | T],T,01,O2) :- country(01,O2,_,_,_,_,_,_,_,_,_).
-reln([the,gdp,of | T],T,_01,O2) :- country(O2,_,_,_01,_,_,_,_,_,_,_).
-reln([the,family,score,of | T],T,_01,O2) :- country(O2,_,_,_,_01,_,_,_,_,_,_).
-% reln([the,life,expectancy,of | T],T,_01,O2) :- country(O2,_,_,_,_,_01,_,_,_,_).
-% reln([the,government,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_01,_,_,_).
-% reln([the,corruption,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_,_01,_,_).
-% reln([the,generosity,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_,_,_01,_).
-% reln([the,dystopia,residual,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_,_,_,_01).
+reln([the,happiness,rank,of | T],T,_01,O2) :- country(O2,_,_01,_,_,_,_,_,_,_,_).
+reln([the,happiness,score,of | T],T,_01,O2) :- country(O2,_,_,_01,_,_,_,_,_,_,_).
+reln([the,gdp,score,of | T],T,_01,O2) :- country(O2,_,_,_,_01,_,_,_,_,_,_).
+reln([the,family,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_01,_,_,_,_,_).
+reln([the,life,expectancy,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_01,_,_,_,_).
+reln([the,government,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_,_01,_,_,_).
+reln([the,corruption,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_,_,_01,_,_).
+reln([the,generosity,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_,_,_,_01,_).
+reln([the,dystopia,residual,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_,_,_,_,_01).
 
 % question(Question,QR,Object) is true if Query provides an answer about Object to Question
 question([is | T0],T2,Obj) :-
