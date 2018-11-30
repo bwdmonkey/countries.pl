@@ -35,6 +35,7 @@ mp(T0,T2,Subject) :-
 mp([that|T0],T2,Subject) :-
     reln(T0,T1,Subject,Object),
     noun_phrase(T1,T2,Object).
+
 mp(T,T,_).
 
 % DICTIONARY
@@ -45,9 +46,11 @@ adj([high,gdp | T],T,Obj) :- wealthy(Obj).
 noun([country | T],T,Obj) :- country(Obj,_,_,_,_,_,_,_,_,_,_).
 noun([X | T],T,X) :- country(X,_,_,_,_,_,_,_,_,_,_).
 noun([region | T],T,Obj) :- country(_,Obj,_,_,_,_,_,_,_,_,_).
+noun([X | T],T,X):- country(_,X,_,_,_,_,_,_,_,_,_).
 
-reln([the,region,of | T],T,O1,O2) :- country(O2,O1,_,_,_,_,_,_,_,_,_).
+reln([the,region,of | T],T,O1,O2) :- country(O1,O2,_,_,_,_,_,_,_,_,_).
 reln([the,continent,of | T],T,O1,O2) :- country(O2,O1,_,_,_,_,_,_,_,_,_).
+reln([the,countries,of | T], T, O1, O2) :- country(O1,O2,_,_,_,_,_,_,_,_,_).
 reln([country,is,in | T],T,01,O2) :- country(01,O2,_,_,_,_,_,_,_,_,_).
 reln([the,happiness,rank,of | T],T,_01,O2) :- country(O2,_,_01,_,_,_,_,_,_,_,_).
 reln([the,happiness,score,of | T],T,_01,O2) :- country(O2,_,_,_01,_,_,_,_,_,_,_).
