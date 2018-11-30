@@ -1,3 +1,8 @@
+% IMPORTANT: country data imported must in the format of:
+% country(name,region,happiness_rank,happiness_score,gdp_per_capita,family,
+%         life_expectancy,freedom,government_corruption,generosity,dystopia_residual)
+
+
 % Ind is individual noun phrase is referring to
 % A noun phrase is a determiner followed by adjectives followed
 % by a noun followed by an optional modifying phrase:
@@ -37,15 +42,15 @@ adj([happy | T],T,Obj) :- happy(Obj).
 adj([wealthy | T],T,Obj) :- wealthy(Obj).
 adj([high,gdp | T],T,Obj) :- wealthy(Obj).
 
-noun([country | T],T,Obj) :- country(Obj,_,_,_,_).
-noun([X | T],T,X) :- country(X,_,_,_,_).
-noun([region | T],T,Obj) :- country(_,Obj,_,_,_).
+noun([country | T],T,Obj) :- country(Obj,_,_,_,_,_,_,_,_,_,_).
+noun([X | T],T,X) :- country(X,_,_,_,_,_,_,_,_,_,_).
+noun([region | T],T,Obj) :- country(_,Obj,_,_,_,_,_,_,_,_,_).
 
-reln([the,region,of | T],T,O1,O2) :- country(O2,O1,_,_,_).
-reln([the,continent,of | T],T,O1,O2) :- country(O2,O1,_,_,_).
-reln([country,is,in | T],T,01,O2) :- country(01,O2,_,_,_).
-reln([the,gdp,of | T],T,_01,O2) :- country(O2,_,_,_01,_).
-reln([the,family,score,of | T],T,_01,O2) :- country(O2,_,_,_,_01).
+reln([the,region,of | T],T,O1,O2) :- country(O2,O1,_,_,_,_,_,_,_,_,_).
+reln([the,continent,of | T],T,O1,O2) :- country(O2,O1,_,_,_,_,_,_,_,_,_).
+reln([country,is,in | T],T,01,O2) :- country(01,O2,_,_,_,_,_,_,_,_,_).
+reln([the,gdp,of | T],T,_01,O2) :- country(O2,_,_,_01,_,_,_,_,_,_,_).
+reln([the,family,score,of | T],T,_01,O2) :- country(O2,_,_,_,_01,_,_,_,_,_,_).
 % reln([the,life,expectancy,of | T],T,_01,O2) :- country(O2,_,_,_,_,_01,_,_,_,_).
 % reln([the,government,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_01,_,_,_).
 % reln([the,corruption,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_,_01,_,_).
@@ -74,22 +79,12 @@ ask(Q,A) :-
 %  The Database of Facts to be Queried
 
 happy(X):-
-    country(X,_,B,_,_),
+    country(X,_,B,_,_,_,_,_,_,_,_),
     B =< 5.
 
 wealthy(X):-
-    country(X,_,_,_,C),
+    country(X,_,_,_,C,_,_,_,_,_,_),
     C >= 1.5.
-
-country(denmark, western_europe, 1, 7.526, 1.44178).
-country(argentina, western_europe, 2, 7.509, 1.52733).
-country(chile, western_europe, 3, 7.501, 1.42666).
-country(brazil, western_europe, 4, 7.498, 1.57744).
-country(peru, western_europe, 5, 7.413, 1.40598).
-country(canada, north_america, 6, 7.404, 1.44015).
-country(netherlands, western_europe, 7, 7.339, 1.46468).
-country(new_zealand, australia_and_new_zealand, 8, 7.334, 1.36066).
-country(australia, australia_and_new_zealand, 9, 7.313, 1.44443).
 
 /* Try the following queries:
 ?- ask([what,is,a,country],A).

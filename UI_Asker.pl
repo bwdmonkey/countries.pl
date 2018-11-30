@@ -1,4 +1,4 @@
-% :- consult("data/happiness_data.pl").
+:- consult("data/happiness_data.pl").
 :- consult("grammar.pl").
 
 
