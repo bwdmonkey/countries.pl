@@ -1,7 +1,7 @@
 % IMPORTANT: country data imported must in the format of:
 % country(name,region,happiness_rank,happiness_score,gdp_per_capita,family,
 %         life_expectancy,freedom,government_corruption,generosity,dystopia_residual)
-
+:- consult("data/happiness_data.pl").
 
 % Ind is individual noun phrase is referring to
 % A noun phrase is a determiner followed by adjectives followed
@@ -54,8 +54,10 @@ reln([the,happiness,score,of | T],T,_01,O2) :- country(O2,_,_,_01,_,_,_,_,_,_,_)
 reln([the,gdp,score,of | T],T,_01,O2) :- country(O2,_,_,_,_01,_,_,_,_,_,_).
 reln([the,family,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_01,_,_,_,_,_).
 reln([the,life,expectancy,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_01,_,_,_,_).
-reln([the,government,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_,_01,_,_,_).
+reln([the,freedom,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_,_01,_,_,_).
+reln([the,government,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_,_,_01,_,_).
 reln([the,corruption,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_,_,_01,_,_).
+reln([the,government,corruption,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_,_,_01,_,_).
 reln([the,generosity,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_,_,_,_01,_).
 reln([the,dystopia,residual,score,of | T],T,_01,O2) :- country(O2,_,_,_,_,_,_,_,_,_,_01).
 
@@ -106,3 +108,47 @@ wealthy(X):-
 ?- ask([what,is,the,gdp,of,a,country,that, in,the,region,western_europe],A).
 ?- ask([what,country,is,in,the,region,north_america],A).
 */
+
+% Tests - To run tests `run_tests.`
+:- begin_tests(grammar).
+
+% Basic attribute score tests - deterministic
+test(denmark_continent, [nondet]) :-
+    ask([what,is,the,continent,of,denmark],A),
+    assertion(A == western_europe).
+test(denmark_happiness_rank, [nondet]) :-
+    ask([what,is,the,happiness,rank,of,denmark],A),
+    assertion(A == 1).
+test(denmark_happiness_score, [nondet]) :-
+    ask([what,is,the,happiness,score,of,denmark],A),
+    assertion(A == 7.526).
+test(denmark_gdp_score, [nondet]) :-
+    ask([what,is,the,gdp,score,of,denmark],A),
+    assertion(A == 1.44178).
+test(denmark_family_score, [nondet]) :-
+    ask([what,is,the,family,score,of,denmark],A),
+    assertion(A == 1.16374).
+test(denmark_life_expectancy_score, [nondet]) :-
+    ask([what,is,the,life,expectancy,score,of,denmark],A),
+    assertion(A == 0.79504).
+test(denmark_freedom_score, [nondet]) :-
+    ask([what,is,the,freedom,score,of,denmark],A),
+    assertion(A == 0.57941).
+test(denmark_corruption_score, [nondet]) :-
+    ask([what,is,the,corruption,score,of,denmark],A),
+    assertion(A == 0.44453).
+test(denmark_government_score, [nondet]) :-
+    ask([what,is,the,government,score,of,denmark],A),
+    assertion(A == 0.44453).
+test(denmark_government_corruption_score, [nondet]) :-
+    ask([what,is,the,government,corruption,score,of,denmark],A),
+    assertion(A == 0.44453).
+test(denmark_generosity_score, [nondet]) :-
+    ask([what,is,the,generosity,score,of,denmark],A),
+    assertion(A == 0.36171).
+test(denmark_dystopia_residual_score, [nondet]) :-
+    ask([what,is,the,dystopia,residual,score,of,denmark],A),
+    assertion(A == 2.73939).
+
+
+:- end_tests(grammar).

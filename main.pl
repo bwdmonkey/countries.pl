@@ -1,6 +1,4 @@
-:- consult("data/happiness_data.pl").
 :- consult("grammar.pl").
-
 
 q(Ans) :-
 	print("List of score attributes that you can inquire about:"), nl,
