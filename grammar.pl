@@ -41,6 +41,8 @@ mp(T,T,_).
 adj([happy | T],T,Obj) :- happy(Obj).
 adj([wealthy | T],T,Obj) :- wealthy(Obj).
 adj([high,gdp | T],T,Obj) :- wealthy(Obj).
+adj([highest,gdp | T],T,Obj) :- highest(Obj).
+adj([lowest,gdp | T],T,Obj) :- lowest(Obj).
 adj([western,europe | T],T,Obj) :- country(Obj,western_europe,_,_,_,_,_,_,_,_,_).
 adj([australia,and,new,zealand | T],T,Obj) :- country(Obj,australia_and_new_zealand,_,_,_,_,_,_,_,_,_).
 adj([middle,east,and,northern_africa | T],T,Obj) :- country(Obj,middle_east_and_northern_africa,_,_,_,_,_,_,_,_,_).
@@ -58,6 +60,7 @@ noun([region | T],T,Obj) :- country(_,Obj,_,_,_,_,_,_,_,_,_).
 
 reln([the,region,of | T],T,O1,O2) :- country(O2,O1,_,_,_,_,_,_,_,_,_).
 reln([the,continent,of | T],T,O1,O2) :- country(O2,O1,_,_,_,_,_,_,_,_,_).
+reln([country,is,in | T],T,O1,O2) :- country(O1,O2,_,_,_,_,_,_,_,_,_).
 reln([the,happiness,rank,of | T],T,_01,O2) :- country(O2,_,_01,_,_,_,_,_,_,_,_).
 reln([the,happiness,score,of | T],T,_01,O2) :- country(O2,_,_,_01,_,_,_,_,_,_,_).
 reln([the,gdp,score,of | T],T,_01,O2) :- country(O2,_,_,_,_01,_,_,_,_,_,_).
@@ -97,22 +100,30 @@ wealthy(X):-
     country(X,_,_,_,C,_,_,_,_,_,_),
     C >= 1.5.
 
+% MAX & MIN
+highest(X) :- country(X,_,_,_,_,_,_,_,_,_,_), 
+not(higher(X)), !.
+higher(X) :- country(X,_,_,Y,_,_,_,_,_,_,_), 
+             country(C,_,_,Z,_,_,_,_,_,_,_),
+             C\=X, Y > Z.
+
+lowest(X) :- country(X,_,_,_,_,_,_,_,_,_,_), 
+not(lower(X)), !.
+lower(X) :- country(X,_,_,Y,_,_,_,_,_,_,_), 
+             country(C,_,_,Z,_,_,_,_,_,_,_),
+             C\=X, Y < Z.
+
 /* Try the following queries:
 ?- ask([what,is,a,country],A).
 ?- ask([who,is,happy],A).
 ?- ask([what,is,a,happy,country],A).
 ?- ask([what,is,a,wealthy,country],A).
 ?- ask([what,is,a,high,gdp,country],A).
+?- ask([what,is,a,highest,gdp,country?],A).
+?- ask([what,is,a,lowest,gdp,country?],A).
 ?- ask([what,is,the,region,of,chile],A).
 ?- ask([what,is,the,continent,of,canada],A).
 ?- ask([what,is,the,gdp,of,argentina],A).
 ?- ask([what,is,the,family,score,of,argentina],A).
 ?- ask([what,is,a,western,europe,country?],A).
-
-% Does not work yet [WIP]
-?- ask([what,country,is,in,north_america],A).
-?- ask([what,is,a,country,that,is,the,region,of,western_europe],A).
-?- ask([what,is,a,country,that,is,in,the,same,region,as,the,region,of,denmark],A).
-?- ask([what,is,the,gdp,of,a,country,that, in,the,region,western_europe],A).
-?- ask([what,country,is,in,the,region,north_america],A).
 */
