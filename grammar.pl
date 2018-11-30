@@ -41,6 +41,16 @@ mp(T,T,_).
 adj([happy | T],T,Obj) :- happy(Obj).
 adj([wealthy | T],T,Obj) :- wealthy(Obj).
 adj([high,gdp | T],T,Obj) :- wealthy(Obj).
+adj([western,europe | T],T,Obj) :- country(Obj,western_europe,_,_,_,_,_,_,_,_,_).
+adj([australia,and,new,zealand | T],T,Obj) :- country(Obj,australia_and_new_zealand,_,_,_,_,_,_,_,_,_).
+adj([middle,east,and,northern_africa | T],T,Obj) :- country(Obj,middle_east_and_northern_africa,_,_,_,_,_,_,_,_,_).
+adj([north,america | T],T,Obj) :- country(Obj,north_america,_,_,_,_,_,_,_,_,_).
+adj([latin,america,and,caribbean | T],T,Obj) :- country(Obj,latin_america_and_caribbean,_,_,_,_,_,_,_,_,_).
+adj([southeastern,asia | T],T,Obj) :- country(Obj,southeastern_asia,_,_,_,_,_,_,_,_,_).
+adj([central,and,eastern,europe | T],T,Obj) :- country(Obj,central_and_eastern_europe,_,_,_,_,_,_,_,_,_).
+adj([middle,east,and,northern,africa | T],T,Obj) :- country(Obj,middle_east_and_northern_africa,_,_,_,_,_,_,_,_,_).
+adj([eastern,asia | T],T,Obj) :- country(Obj,eastern_asia,_,_,_,_,_,_,_,_,_).
+adj([sub,saharan,africa | T],T,Obj) :- country(Obj,sub_saharan_africa,_,_,_,_,_,_,_,_,_).
 
 noun([country | T],T,Obj) :- country(Obj,_,_,_,_,_,_,_,_,_,_).
 noun([X | T],T,X) :- country(X,_,_,_,_,_,_,_,_,_,_).
@@ -48,7 +58,6 @@ noun([region | T],T,Obj) :- country(_,Obj,_,_,_,_,_,_,_,_,_).
 
 reln([the,region,of | T],T,O1,O2) :- country(O2,O1,_,_,_,_,_,_,_,_,_).
 reln([the,continent,of | T],T,O1,O2) :- country(O2,O1,_,_,_,_,_,_,_,_,_).
-reln([country,is,in | T],T,01,O2) :- country(01,O2,_,_,_,_,_,_,_,_,_).
 reln([the,happiness,rank,of | T],T,_01,O2) :- country(O2,_,_01,_,_,_,_,_,_,_,_).
 reln([the,happiness,score,of | T],T,_01,O2) :- country(O2,_,_,_01,_,_,_,_,_,_,_).
 reln([the,gdp,score,of | T],T,_01,O2) :- country(O2,_,_,_,_01,_,_,_,_,_,_).
@@ -98,6 +107,7 @@ wealthy(X):-
 ?- ask([what,is,the,continent,of,canada],A).
 ?- ask([what,is,the,gdp,of,argentina],A).
 ?- ask([what,is,the,family,score,of,argentina],A).
+?- ask([what,is,a,western,europe,country?],A).
 
 % Does not work yet [WIP]
 ?- ask([what,country,is,in,north_america],A).
