@@ -1,4 +1,4 @@
-% Ind is individual noun phrase is referring to 
+% Ind is individual noun phrase is referring to
 % A noun phrase is a determiner followed by adjectives followed
 % by a noun followed by an optional modifying phrase:
 noun_phrase(T0,T4,Ind) :-
@@ -13,7 +13,7 @@ det([the | T],T,_).
 det([a | T],T,_).
 det(T,T,_).
 
-% adjectives(T0,T1,Ind) is true if 
+% adjectives(T0,T1,Ind) is true if
 % T0-T1 is an adjective is true of Ind
 adjectives(T0,T2,Ind) :-
     adj(T0,T1,Ind),
@@ -23,7 +23,7 @@ adjectives(T,T,_).
 % An optional modifying phrase / relative clause is either
 % a relation (verb or preposition) followed by a noun_phrase or
 % 'that' followed by a relation then a noun_phrase or
-% nothing 
+% nothing
 mp(T0,T2,Subject) :-
     reln(T0,T1,Subject,Object),
     noun_phrase(T1,T2,Object).
@@ -109,25 +109,3 @@ country(australia, australia_and_new_zealand, 9, 7.313, 1.44443).
 ?- ask([what,is,the,gdp,of,a,country,that, in,the,region,western_europe],A).
 ?- ask([what,country,is,in,the,region,north_america],A).
 */
-
-
-% Start Program
-q(Ans) :-
-	print("List of attributes that you can inquire about:"),
-	nl,
-	print("Country, Region, Happiness Rank, Happiness Score, GDP per Capita, Family, Life Expectancy, Freedom, Government Corruption, Generosity, Dystopia Residual"),
-	
-	nl, nl,
-	print("Sample Queries: What is the happiness rating of Sweden?"),
-	nl,
-	print("                What is the GDP of France."),
-	nl,
-	print("                What are the countries in Europe"),
-	
-	nl, nl,
-	print("Please enter query in lowercase."),
-	nl,
-	write("Ask me: "), flush_output(current_output),
-	readln(Ln),
-	question(Ln,End, Ans),
-	member(End,[[],['?'],['.']]).
