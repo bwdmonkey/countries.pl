@@ -16,6 +16,7 @@ noun_phrase(T0,T4,Ind) :-
 % They do not provide any extra constraints.
 det([the | T],T,_).
 det([a | T],T,_).
+det([an | T],T,_).
 det(T,T,_).
 
 % adjectives(T0,T1,Ind) is true if
@@ -39,18 +40,22 @@ mp(T,T,_).
 
 % DICTIONARY
 adj([happy | T],T,Obj) :- happy(Obj).
+adj([unhappy | T],T,Obj) :- unhappy(Obj).
+adj([poor | T],T,Obj) :- poor(Obj).
+adj([low,gdp | T],T,Obj) :- poor(Obj).
 adj([wealthy | T],T,Obj) :- wealthy(Obj).
 adj([high,gdp | T],T,Obj) :- wealthy(Obj).
-adj([western,europe | T],T,Obj) :- country(Obj,western_europe,_,_,_,_,_,_,_,_,_).
-adj([australia,and,new,zealand | T],T,Obj) :- country(Obj,australia_and_new_zealand,_,_,_,_,_,_,_,_,_).
-adj([middle,east,and,northern_africa | T],T,Obj) :- country(Obj,middle_east_and_northern_africa,_,_,_,_,_,_,_,_,_).
-adj([north,america | T],T,Obj) :- country(Obj,north_america,_,_,_,_,_,_,_,_,_).
-adj([latin,america,and,caribbean | T],T,Obj) :- country(Obj,latin_america_and_caribbean,_,_,_,_,_,_,_,_,_).
-adj([southeastern,asia | T],T,Obj) :- country(Obj,southeastern_asia,_,_,_,_,_,_,_,_,_).
-adj([central,and,eastern,europe | T],T,Obj) :- country(Obj,central_and_eastern_europe,_,_,_,_,_,_,_,_,_).
-adj([middle,east,and,northern,africa | T],T,Obj) :- country(Obj,middle_east_and_northern_africa,_,_,_,_,_,_,_,_,_).
-adj([eastern,asia | T],T,Obj) :- country(Obj,eastern_asia,_,_,_,_,_,_,_,_,_).
-adj([sub,saharan,africa | T],T,Obj) :- country(Obj,sub_saharan_africa,_,_,_,_,_,_,_,_,_).
+
+region([western,europe | T],T,Obj) :- country(Obj,western_europe,_,_,_,_,_,_,_,_,_).
+region([australia,and,new,zealand | T],T,Obj) :- country(Obj,australia_and_new_zealand,_,_,_,_,_,_,_,_,_).
+region([middle,east,and,northern_africa | T],T,Obj) :- country(Obj,middle_east_and_northern_africa,_,_,_,_,_,_,_,_,_).
+region([north,america | T],T,Obj) :- country(Obj,north_america,_,_,_,_,_,_,_,_,_).
+region([latin,america,and,caribbean | T],T,Obj) :- country(Obj,latin_america_and_caribbean,_,_,_,_,_,_,_,_,_).
+region([southeastern,asia | T],T,Obj) :- country(Obj,southeastern_asia,_,_,_,_,_,_,_,_,_).
+region([central,and,eastern,europe | T],T,Obj) :- country(Obj,central_and_eastern_europe,_,_,_,_,_,_,_,_,_).
+region([middle,east,and,northern,africa | T],T,Obj) :- country(Obj,middle_east_and_northern_africa,_,_,_,_,_,_,_,_,_).
+region([eastern,asia | T],T,Obj) :- country(Obj,eastern_asia,_,_,_,_,_,_,_,_,_).
+region([sub,saharan,africa | T],T,Obj) :- country(Obj,sub_saharan_africa,_,_,_,_,_,_,_,_,_).
 
 noun([country | T],T,Obj) :- country(Obj,_,_,_,_,_,_,_,_,_,_).
 noun([X | T],T,X) :- country(X,_,_,_,_,_,_,_,_,_,_).
@@ -78,30 +83,47 @@ question([what,is | T0], T1, Obj) :-
     mp(T0,T1,Obj).
 question([what,is | T0],T1,Obj) :-
     noun_phrase(T0,T1,Obj).
-question([who,is | T0],T1,Ind) :-
-    adjectives(T0,T1,Ind).
+question([what,country,is,in | T0],T1,Ind) :-
+    region(T0,T1,Ind).
+question([are | T0],T2,Obj) :-
+    noun_phrase(T0,T1,Obj),
+    mp(T1,T2,Obj).
+question([what,are | T0], T1, Obj) :-
+    mp(T0,T1,Obj).
+question([what,are | T0],T1,Obj) :-
+    noun_phrase(T0,T1,Obj).
+question([what,countries,are,in | T0],T1,Ind) :-
+    region(T0,T1,Ind).
 question([what | T0],T2,Obj) :-
     noun_phrase(T0,T1,Obj),
     mp(T1,T2,Obj).
+
+% Attributes
+
+happy(X):-
+    country(X,_,B,_,_,_,_,_,_,_,_),
+    B =< 20.
+
+unhappy(X):-
+    country(X,_,B,_,_,_,_,_,_,_,_),
+    B >= 130.
+
+wealthy(X):-
+    country(X,_,_,_,C,_,_,_,_,_,_),
+    C >= 1.0.
+
+poor(X):-
+    country(X,_,_,_,C,_,_,_,_,_,_),
+    C <= 0.5.
+
 
 % ask(Q,A) gives answer A to question Q
 ask(Q,A) :-
     question(Q,[],A).
 
-
-%  The Database of Facts to be Queried
-
-happy(X):-
-    country(X,_,B,_,_,_,_,_,_,_,_),
-    B =< 5.
-
-wealthy(X):-
-    country(X,_,_,_,C,_,_,_,_,_,_),
-    C >= 1.5.
-
 /* Try the following queries:
 ?- ask([what,is,a,country],A).
-?- ask([who,is,happy],A).
+?- ask([who, is,happy],A).
 ?- ask([what,is,a,happy,country],A).
 ?- ask([what,is,a,wealthy,country],A).
 ?- ask([what,is,a,high,gdp,country],A).
@@ -109,10 +131,9 @@ wealthy(X):-
 ?- ask([what,is,the,continent,of,canada],A).
 ?- ask([what,is,the,gdp,of,argentina],A).
 ?- ask([what,is,the,family,score,of,argentina],A).
-?- ask([what,is,a,western,europe,country?],A).
+?- ask([what,country,is,in,north_america],A).
 
 % Does not work yet [WIP]
-?- ask([what,country,is,in,north_america],A).
 ?- ask([what,is,a,country,that,is,the,region,of,western_europe],A).
 ?- ask([what,is,a,country,that,is,in,the,same,region,as,the,region,of,denmark],A).
 ?- ask([what,is,the,gdp,of,a,country,that, in,the,region,western_europe],A).
@@ -159,6 +180,5 @@ test(denmark_generosity_score, [nondet]) :-
 test(denmark_dystopia_residual_score, [nondet]) :-
     ask([what,is,the,dystopia,residual,score,of,denmark],A),
     assertion(A == 2.73939).
-
 
 :- end_tests(grammar).
