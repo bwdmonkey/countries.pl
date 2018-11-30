@@ -108,17 +108,17 @@ wealthy(X):-
     C >= 1.5.
 
 % MAX & MIN
-highest(X) :- country(X,_,_,_,_,_,_,_,_,_,_), 
+highest(X) :- country(X,_,_,_,_,_,_,_,_,_,_),
 not(higher(X)), !.
-higher(X) :- country(X,_,_,Y,_,_,_,_,_,_,_), 
-             country(C,_,_,Z,_,_,_,_,_,_,_),
-             C\=X, Y > Z.
-
-lowest(X) :- country(X,_,_,_,_,_,_,_,_,_,_), 
-not(lower(X)), !.
-lower(X) :- country(X,_,_,Y,_,_,_,_,_,_,_), 
+higher(X) :- country(X,_,_,Y,_,_,_,_,_,_,_),
              country(C,_,_,Z,_,_,_,_,_,_,_),
              C\=X, Y < Z.
+
+lowest(X) :- country(X,_,_,_,_,_,_,_,_,_,_),
+not(lower(X)), !.
+lower(X) :- country(X,_,_,Y,_,_,_,_,_,_,_),
+             country(C,_,_,Z,_,_,_,_,_,_,_),
+             C\=X, Y > Z.
 
 /* Try the following queries:
 ?- ask([what,is,a,country],A).
@@ -177,10 +177,10 @@ test(denmark_dystopia_residual_score, [nondet]) :-
     assertion(A == 2.73939).
 test(highest_gdp_score, [nondet]) :-
     ask([what,is,the,highest,gdp,score,country],A),
-    assertion(A == burundi).
+    assertion(A == denmark).
 test(lowest_gdp_score, [nondet]) :-
     ask([what,is,the,lowest,gdp,score,country],A),
-    assertion(A == denmark).
+    assertion(A == burundi).
 
 
 :- end_tests(grammar).
