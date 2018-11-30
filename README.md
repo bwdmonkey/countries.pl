@@ -11,11 +11,13 @@ Usage: Import via consulting in SWI-Prolog
 true
 ?- q(Ans).
 "List of score attributes that you can inquire about:"
-"Country, Region, Happiness Rank, Happiness Score, GDP per Capita, Family, Life Expectancy, Freedom, Government Corruption, Generosity, Dystopia Residual"
+"Country, Region, Happiness Rank, Happiness Score, GDP score, Family score,"
+"Life Expectancy score, Freedom score, Government Corruption score, "
+"Generosity score, Dystopia Residual score"
 
-"Sample Queries: what is the happiness rating of sweden?"
+"Sample Queries: what is the happiness rank of sweden?"
 "                what is the gdp score of france."
-"                what are the countries in western_europe"
+"                what countries are in western europe"
 
 "Please enter query in lowercase."
 Ask me: what is the family score of argentina?
@@ -30,7 +32,7 @@ Testing: Only applicable to `grammar.pl`
 true
 ?- run_tests.
 % PL-Unit: grammar ............ done
-% All 12 tests passed
+% All 16 tests passed
 true.
 ```
 

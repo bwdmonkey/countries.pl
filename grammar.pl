@@ -85,6 +85,8 @@ question([what,is | T0],T1,Obj) :-
     noun_phrase(T0,T1,Obj).
 question([what,country,is,in | T0],T1,Ind) :-
     region(T0,T1,Ind).
+question([what,country,is| T0],T1,Ind) :-
+    adjectives(T0,T1,Ind).
 question([are | T0],T2,Obj) :-
     noun_phrase(T0,T1,Obj),
     mp(T1,T2,Obj).
@@ -94,6 +96,8 @@ question([what,are | T0],T1,Obj) :-
     noun_phrase(T0,T1,Obj).
 question([what,countries,are,in | T0],T1,Ind) :-
     region(T0,T1,Ind).
+question([what,countries,are| T0],T1,Ind) :-
+    adjectives(T0,T1,Ind).
 question([what | T0],T2,Obj) :-
     noun_phrase(T0,T1,Obj),
     mp(T1,T2,Obj).
@@ -110,11 +114,11 @@ unhappy(X):-
 
 wealthy(X):-
     country(X,_,_,_,C,_,_,_,_,_,_),
-    C >= 1.0.
+    C >= 1.5.
 
 poor(X):-
     country(X,_,_,_,C,_,_,_,_,_,_),
-    C <= 0.5.
+    C < 0.5.
 
 
 % ask(Q,A) gives answer A to question Q
@@ -123,13 +127,13 @@ ask(Q,A) :-
 
 /* Try the following queries:
 ?- ask([what,is,a,country],A).
-?- ask([who, is,happy],A).
+?- ask([what,country,is,happy],A).
 ?- ask([what,is,a,happy,country],A).
 ?- ask([what,is,a,wealthy,country],A).
 ?- ask([what,is,a,high,gdp,country],A).
 ?- ask([what,is,the,region,of,chile],A).
 ?- ask([what,is,the,continent,of,canada],A).
-?- ask([what,is,the,gdp,of,argentina],A).
+?- ask([what,is,the,gdp,score,of,argentina],A).
 ?- ask([what,is,the,family,score,of,argentina],A).
 ?- ask([what,country,is,in,north_america],A).
 
@@ -180,5 +184,16 @@ test(denmark_generosity_score, [nondet]) :-
 test(denmark_dystopia_residual_score, [nondet]) :-
     ask([what,is,the,dystopia,residual,score,of,denmark],A),
     assertion(A == 2.73939).
+
+% More complex continent country relationship test
+test(north_america_countries, all(A == [canada, united_states])) :-
+    region([north,america],[],A).
+test(north_america_countries_query_is, all(A == [canada, united_states])) :-
+    ask([what,country,is,in,north,america],A).
+test(north_america_countries_query_are, all(A == [canada, united_states])) :-
+    ask([what,countries,are,in,north,america],A).
+
+test(happy_countries, all(A == [denmark, switzerland, iceland, norway, finland, canada, netherlands, new_zealand, australia, sweden, israel, austria, united_states, costa_rica, puerto_rico, germany, brazil, belgium, ireland, luxembourg])) :-
+    ask([what, country, is, happy],A).
 
 :- end_tests(grammar).
